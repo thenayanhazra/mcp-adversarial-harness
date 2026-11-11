@@ -24,7 +24,9 @@ from mcp_redteam.backends.base import ModelBackend
 
 _TOOL_CALL_RE = re.compile(
     r"[Cc]all\s+[`']?(?P<tool>[a-zA-Z0-9_Ḁ-ỿ.]+)[`']?"
-    r"(?:\s+with\s+(?P<args>[^.!\n]{1,200}))?",
+    # Args run to the end of the sentence: a "." only ends them when followed by
+    # whitespace or end of text, so URLs and hostnames like attacker.com survive.
+    r"(?:\s+with\s+(?P<args>(?:[^!\n.]|\.(?=\S)){1,200}))?",
 )
 _ARG_KV_RE = re.compile(r'(?P<k>\w+)\s*=\s*["\']?(?P<v>[^,"\']+)["\']?')
 
@@ -52,7 +54,9 @@ class MockBackend(ModelBackend):
         tools: list[dict[str, Any]],
         system: str | None = None,
     ) -> dict[str, Any]:
-        self._turn += 1
+        # Derive the turn from the conversation itself, so one backend instance
+        # can be shared across many probes (as the CLI does) without state leaking.
+        self._turn = 1 + sum(1 for m in messages if m.get("role") == "assistant")
         tool_names = {t["name"] for t in tools}
 
         user_text = _get_user_message(messages)
@@ -160,7 +164,9 @@ def _extract_results(messages: list[dict[str, Any]]) -> str:
 def _find_injected_call(
     text: str, tool_names: set[str]
 ) -> dict[str, Any] | None:
-    for m in _TOOL_CALL_RE.finditer(text):
+    # Follow the most recent instruction: probe payloads are appended after any
+    # existing text, so the last matching call is the one under test.
+    for m in reversed(list(_TOOL_CALL_RE.finditer(text))):
         name = m.group("tool")
         if name in tool_names:
             args: dict[str, Any] = {}

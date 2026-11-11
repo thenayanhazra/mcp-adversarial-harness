@@ -190,9 +190,7 @@ def _write_transcript(finding: Finding, transcript_dir: Path) -> None:
 def _reproducer(server_spec: str, payload_id: str, model_id: str) -> str:
     return (
         f"mcp-redteam reproduce {payload_id} "
-        f"--transcript transcripts/{payload_id}.jsonl "
-        f"--model {model_id} "
-        f"stdio:{server_spec!r}"
+        f"--transcript transcripts/{payload_id}.jsonl"
     )
 
 
