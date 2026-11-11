@@ -15,5 +15,5 @@ Use this checklist for every release.
 5. Commit release prep changes.
 6. Create and push a Git tag in the format `v*` (for example, `v0.2.0`).
 7. Verify the tag-triggered release workflow succeeds.
-8. Publish artifacts to PyPI (via trusted publishing or `PYPI_API_TOKEN`).
+8. Download the built artifacts from the workflow run and publish to PyPI manually if desired (`twine upload dist/*`).
 9. Publish GitHub release notes that match the changelog.

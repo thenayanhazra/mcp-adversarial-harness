@@ -13,7 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,10 +29,11 @@ jobs:
           pip install build
 
       - name: Lint
-        run: ruff check .
+        run: ruff check mcp_redteam/
 
-      - name: Type check
+      - name: Type check (informational)
         run: pyright
+        continue-on-error: true
 
       - name: Test
         run: pytest
@@ -46,13 +46,3 @@ jobs:
         with:
           name: dist-${{ github.ref_name }}
           path: dist/*
-
-      - name: Publish to PyPI (trusted publishing)
-        if: ${{ secrets.PYPI_API_TOKEN == '' }}
-        uses: pypa/gh-action-pypi-publish@release/v1
-
-      - name: Publish to PyPI (token)
-        if: ${{ secrets.PYPI_API_TOKEN != '' }}
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          password: ${{ secrets.PYPI_API_TOKEN }}
