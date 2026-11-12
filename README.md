@@ -32,6 +32,8 @@ Excerpt from a scan of the bundled vulnerable test server ([full sample](docs/sa
 >
 > Replay: `mcp-redteam reproduce exfil-001 --transcript transcripts/exfil-001.jsonl`
 
+> **Part of a kit.** This tool is one of four that [AI Security Assessment](https://github.com/thenayanhazra/ai-security-assessment) runs together against an AI agent platform, combining their findings into one executive report.
+
 ---
 
 ## Threat model
