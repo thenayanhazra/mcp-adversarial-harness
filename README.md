@@ -1,6 +1,6 @@
 # MCP Adversarial Harness
 
-[![CI](https://github.com/thenayanhazra/MCP-Adversarial-Harness/actions/workflows/ci.yml/badge.svg)](https://github.com/thenayanhazra/MCP-Adversarial-Harness/actions/workflows/ci.yml)
+[![CI](https://github.com/thenayanhazra/mcp-adversarial-harness/actions/workflows/ci.yml/badge.svg)](https://github.com/thenayanhazra/mcp-adversarial-harness/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 **Tests whether the tool servers an AI agent connects to can turn the agent against its own user.**
@@ -86,12 +86,12 @@ pip install uv
 # uv pip install mcp-redteam
 
 # Install from source
-git clone https://github.com/thenayanhazra/MCP-Adversarial-Harness
-cd MCP-Adversarial-Harness
+git clone https://github.com/thenayanhazra/mcp-adversarial-harness
+cd mcp-adversarial-harness
 uv pip install -e ".[dev]"
 ```
 
-Track release notes here: <https://github.com/thenayanhazra/MCP-Adversarial-Harness/releases>.
+Track release notes here: <https://github.com/thenayanhazra/mcp-adversarial-harness/releases>.
 
 ---
 
